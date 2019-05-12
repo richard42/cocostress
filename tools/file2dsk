@@ -1,0 +1,35 @@
+#!/bin/sh
+
+target="$1"
+shift
+if [ ! -f "$target" ]
+then
+	decb dskini -3 "$target"
+fi
+for file in $@
+do
+	name=`basename "$file"`
+	ext=`echo "$name" | cut -d. -f2- | tr '[:lower:]' '[:upper:]'`
+	type=`file "$file" | sed 's/.*: //' | cut -d' ' -f1`
+	if [ "$ext" = "BAS" ]
+	then
+		if [ "$type" = "ASCII" ]
+		then
+			decb copy -0 -a "$file" "$target","$name"
+		else
+			decb copy -0 -b "$file" "$target","$name"
+		fi
+	else
+		if [ "$ext" = "BIN" ]
+		then
+			decb copy -2 -b "$file" "$target","$name"
+		else
+			if [ "$type" = "ASCII" ]
+			then
+				decb copy -1 -a "$file" "$target","$name"
+			else
+				decb copy -1 -b "$file" "$target","$name"
+			fi
+		fi
+	fi
+done
