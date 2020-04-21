@@ -64,6 +64,10 @@ test:
 
 # build rules
 
+# 0. Build dependencies
+$(COCODISKGEN): $(TOOLDIR)/src/file2dsk/main.c
+	gcc -o $@ $<
+
 # 1. Assemble CoCo3 RAM Stress Tester
 $(TESTBIN) $(PASS1LIST): $(LOADERSRC)
 	$(ASSEMBLER) $(ASMFLAGS) --define=PASS=1 -b -o $(TESTBIN) --list=$(PASS1LIST) $(SRCDIR)/main.asm

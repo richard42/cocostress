@@ -1,4 +1,6 @@
 /build/
 /cfg/
 STRESS12.DSK
-/tools/
+/tools/file2dsk
+/tools/lwasm
+/tools/mess64
